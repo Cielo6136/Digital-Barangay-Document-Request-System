@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile – DBDRS</title>
+  <link rel="stylesheet" href="../css/styles.css"/>
+  <style>
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #7b9ec4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .profile-avatar svg {
+      width: 48px;
+      height: 48px;
+      fill: var(--white);
+    }
+    .profile-field {
+      background: var(--white);
+      border-radius: 5px;
+      padding: 10px 12px;
+      font-size: 14px;
+      color: #1a2a3a;
+      margin-bottom: 16px;
+    }
+    .profile-field-label {
+      color: var(--label);
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/Northern_Samar_Provincial_Logo.png" alt="Logo" class="header-logo"/>
+    <span class="header-title">Digital Barangay Document<br>Request System</span>
+    <nav class="nav">
+      <a href="dashboard.html">HOME</a>
+      <a href="request-form.html">REQUEST</a>
+      <a href="profile.html" class="active">PROFILE</a>
+    </nav>
+  </div>
+
+  <div class="content" style="max-width: 500px;">
+    <div class="card">
+
+      <div class="profile-avatar">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+        </svg>
+      </div>
+
+      <h2 id="profile-name" style="color: var(--white); text-align:center; font-size: 18px; font-weight: 700; margin-bottom: 24px;">
+        —
+      </h2>
+
+      <p class="profile-field-label">Email:</p>
+      <div class="profile-field" id="profile-email">—</div>
+
+      <button class="btn-primary" onclick="logout()">Log Out</button>
+    </div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/profile.js"></script>
+</body>
+</html>
