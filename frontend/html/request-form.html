@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Request – DBDRS</title>
+  <link rel="stylesheet" href="../css/styles.css"/>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/Northern_Samar_Provincial_Logo.png" alt="Logo" class="header-logo"/>
+    <span class="header-title">Digital Barangay Document<br>Request System</span>
+    <nav class="nav">
+      <a href="dashboard.html">HOME</a>
+      <a href="request-form.html" class="active">REQUEST</a>
+      <a href="profile.html">PROFILE</a>
+    </nav>
+  </div>
+
+  <div class="content" style="max-width: 560px;">
+    <div class="card">
+      <h2 class="card-title">Document Request</h2>
+
+      <div class="form-group">
+        <label for="doc-type">Document Type</label>
+        <select id="doc-type">
+          <option value="" disabled selected>Select Document Type</option>
+          <option value="Barangay Clearance">Barangay Clearance</option>
+          <option value="Barangay Indigency">Barangay Indigency</option>
+          <option value="Barangay Business Permit">Barangay Business Permit</option>
+          <option value="Barangay Certificate of Indigency">Barangay Certificate of Indigency</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="full-name">Full Name <span style="font-weight:400; font-size:11px;">(Last Name, First Name M.I.)</span></label>
+        <input type="text" id="full-name" placeholder="Enter Name"/>
+      </div>
+
+      <div class="form-group">
+        <label for="purpose">Purpose of Request</label>
+        <textarea id="purpose" placeholder="Enter purpose of request"></textarea>
+      </div>
+
+      <button class="btn-primary" id="btn-submit-request">Submit Request</button>
+    </div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/request-form.js"></script>
+</body>
+</html>
