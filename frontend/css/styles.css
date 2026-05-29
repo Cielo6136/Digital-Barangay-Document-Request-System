@@ -7,6 +7,7 @@
 :root {
   --navy:        #1e3a5f;
   --navy-dark:   #152d4a;
+  --navy-light:  #24466e;
   --gold:        #c9a84c;
   --gold-hover:  #b8922e;
   --white:       #ffffff;
@@ -14,7 +15,7 @@
   --label:       #d0dce8;
   --placeholder: #9aafc4;
   --text-light:  #cdd8e3;
-  --link-color:  #c9a84c;
+  --text-muted:  #8aa5c0;
 }
 
 body {
@@ -32,14 +33,14 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 14px 24px;
+  padding: 12px 24px;
 }
 
 .header-logo {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: var(--white);
+  object-fit: cover;
   flex-shrink: 0;
 }
 
@@ -48,34 +49,52 @@ body {
   font-size: 15px;
   font-weight: 700;
   line-height: 1.35;
+  flex: 1;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  margin-left: auto;
+}
+
+.nav a {
+  color: var(--text-light);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav a:hover,
+.nav a.active {
+  color: var(--white);
+  border-bottom-color: var(--gold);
 }
 
 .content {
   flex: 1;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
+  max-width: 960px;
+  padding: 32px 24px;
 }
 
 .card {
   background: var(--navy);
   border-radius: 12px;
-  padding: 36px 32px;
+  padding: 28px;
   width: 100%;
-  max-width: 440px;
 }
 
 .card-title {
   color: var(--white);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .form-group {
@@ -92,7 +111,9 @@ label {
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+select,
+textarea {
   width: 100%;
   padding: 10px 12px;
   border: none;
@@ -105,17 +126,26 @@ input[type="password"] {
   transition: box-shadow 0.2s;
 }
 
-input::placeholder {
-  color: var(--placeholder);
+input::placeholder,
+textarea::placeholder { color: var(--placeholder); }
+input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 2px var(--gold); }
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
-input:focus {
-  box-shadow: 0 0 0 2px var(--gold);
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239aafc4' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
 }
 
 .btn-primary {
   width: 100%;
-  padding: 12px;
+  padding: 11px;
   background: var(--gold);
   color: var(--navy-dark);
   border: none;
@@ -124,35 +154,123 @@ input:focus {
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  margin-top: 8px;
   transition: background 0.2s, transform 0.1s;
 }
 
 .btn-primary:hover  { background: var(--gold-hover); }
 .btn-primary:active { transform: scale(0.98); }
 
-.switch-link {
-  text-align: center;
+.btn-gold-sm {
+  padding: 5px 14px;
+  background: var(--gold);
+  color: var(--navy-dark);
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-gold-sm:hover { background: var(--gold-hover); }
+
+.btn-outline-sm {
+  padding: 5px 14px;
+  background: transparent;
+  color: var(--gold);
+  border: 1.5px solid var(--gold);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-outline-sm:hover {
+  background: var(--gold);
+  color: var(--navy-dark);
+}
+
+.doc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
   margin-top: 16px;
-  font-size: 12.5px;
-  color: var(--text-light);
 }
 
-.switch-link a {
-  color: var(--link-color);
+.doc-card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 16px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.doc-card-icon {
+  width: 52px;
+  height: 60px;
+  background: #dce6f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doc-card-icon svg {
+  width: 32px;
+  height: 32px;
+  fill: var(--navy);
+}
+
+.doc-card-name {
+  font-size: 12px;
   font-weight: 600;
-  text-decoration: none;
+  color: var(--navy-dark);
+  line-height: 1.3;
 }
 
-.switch-link a:hover {
-  text-decoration: underline;
+.doc-card-status {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.badge-pending    { background: #fff3cd; color: #856404; }
+.badge-approved   { background: #d1e7dd; color: #0a5c36; }
+.badge-processing { background: #cfe2ff; color: #084298; }
+.badge-released   { background: #d1e7dd; color: #0a5c36; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--navy);
+  border-radius: 8px;
+  padding: 14px 20px;
+  margin-bottom: 4px;
+}
+
+.section-header h2 {
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .footer-links {
   display: flex;
   justify-content: center;
   gap: 28px;
-  margin-top: 24px;
+  margin-top: 32px;
+  padding-bottom: 24px;
 }
 
 .footer-links a {
@@ -162,6 +280,41 @@ input:focus {
   cursor: pointer;
 }
 
-.footer-links a:hover {
-  color: var(--navy-dark);
+.auth-content {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
 }
+
+.auth-card {
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 440px;
+}
+
+.auth-card .card-title {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.switch-link {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12.5px;
+  color: var(--text-light);
+}
+
+.switch-link a {
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.switch-link a:hover { text-decoration: underline; }
