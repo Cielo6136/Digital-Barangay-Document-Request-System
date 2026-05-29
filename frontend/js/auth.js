@@ -29,9 +29,9 @@ if (btnLogin) {
             sessionStorage.setItem('user', JSON.stringify(user));
 
             if (user.role === 'ADMIN') {
-                window.location.href = '../pages/admin/dashboard.html';
+                window.location.href = 'admin/dashboard.html';
             } else {
-                window.location.href = '../pages/user/dashboard.html';
+                window.location.href = '../html/dashboard.html';
             }
 
         } catch (err) {
@@ -84,7 +84,7 @@ if (btnSignup) {
 // LOGOUT
 function logout() {
     sessionStorage.removeItem('user');
-    window.location.href = '../../pages/login.html';
+    window.location.href = '../html/login.html';
 }
 
 // Call on protected pages
@@ -92,12 +92,12 @@ function requireAuth(requiredRole = null) {
     const user = JSON.parse(sessionStorage.getItem('user'));
 
     if (!user) {
-        window.location.href = '../../pages/login.html';
+        window.location.href = '../html/login.html';  // pages/user/ → pages/login.html
         return null;
     }
 
     if (requiredRole && user.role !== requiredRole) {
-        window.location.href = '../../pages/login.html';
+        window.location.href = '../html/login.html';
         return null;
     }
 
