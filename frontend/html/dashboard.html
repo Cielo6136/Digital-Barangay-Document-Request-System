@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home – DBDRS</title>
+  <link rel="stylesheet" href="../css/styles.css"/>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/Northern_Samar_Provincial_Logo.png" alt="Logo" class="header-logo"/>
+    <span class="header-title">Digital Barangay Document<br>Request System</span>
+    <nav class="nav">
+      <a href="dashboard.html" class="active">HOME</a>
+      <a href="request-form.html">REQUEST</a>
+      <a href="profile.html">PROFILE</a>
+    </nav>
+  </div>
+
+  <div class="content">
+    <div style="text-align:center; margin-bottom: 32px;">
+      <h1 style="color: var(--navy-dark); font-size: 26px; font-weight: 800; margin-bottom: 8px;">
+        Welcome to Digital Barangay<br>Document Request
+      </h1>
+      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+        Your one stop solution for all document requests
+      </p>
+      <a href="request-form.html">
+        <button class="btn-gold-sm" style="padding: 10px 28px; font-size: 14px;">
+          Request Document
+        </button>
+      </a>
+    </div>
+
+    <div class="section-header">
+      <h2>My Active Requests</h2>
+      <a href="activities.html">
+        <button class="btn-gold-sm">VIEW ALL</button>
+      </a>
+    </div>
+    <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 12px; padding-left: 4px;">
+      Track your recent document requests
+    </p>
+
+    <div class="doc-grid" id="active-requests">
+    </div>
+
+    <div id="no-requests" style="display:none; text-align:center; padding: 32px; color: var(--text-muted);">
+      No active requests yet. <a href="request-form.html" style="color: var(--gold);">Request a document</a>
+    </div>
+
+    <div class="footer-links">
+      <a>Privacy Policy</a>
+      <a>Terms of Service</a>
+    </div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/user-dashboard.js"></script>
+</body>
+</html>
