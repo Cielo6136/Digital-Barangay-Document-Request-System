@@ -1,5 +1,6 @@
 const API = 'http://localhost:8080';
 
+// LOGIN
 const btnLogin = document.getElementById('btn-login');
 if (btnLogin) {
     btnLogin.addEventListener('click', async () => {
@@ -25,11 +26,8 @@ if (btnLogin) {
             }
 
             const user = await response.json();
-
-            // save session
             sessionStorage.setItem('user', JSON.stringify(user));
 
-            // redirect based on role
             if (user.role === 'ADMIN') {
                 window.location.href = '../pages/admin/dashboard.html';
             } else {
@@ -37,12 +35,12 @@ if (btnLogin) {
             }
 
         } catch (err) {
-            alert('Could not connect to the server.');
+            alert('Could not connect to the server. Make sure the backend is running.');
         }
     });
 }
 
-
+// SIGN UP
 const btnSignup = document.getElementById('btn-signup');
 if (btnSignup) {
     btnSignup.addEventListener('click', async () => {
@@ -78,9 +76,30 @@ if (btnSignup) {
             window.location.href = 'login.html';
 
         } catch (err) {
-            alert('Could not connect to the server.');
+            alert('Could not connect to the server. Make sure the backend is running.');
         }
     });
 }
 
+// LOGOUT
+function logout() {
+    sessionStorage.removeItem('user');
+    window.location.href = '../../pages/login.html';
+}
 
+// Call on protected pages
+function requireAuth(requiredRole = null) {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+
+    if (!user) {
+        window.location.href = '../../pages/login.html';
+        return null;
+    }
+
+    if (requiredRole && user.role !== requiredRole) {
+        window.location.href = '../../pages/login.html';
+        return null;
+    }
+
+    return user;
+}
