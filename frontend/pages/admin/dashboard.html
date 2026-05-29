@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard – DBDRS</title>
+  <link rel="stylesheet" href="../../css/styles.css"/>
+  <style>
+    .pending-title {
+      background: var(--navy);
+      color: var(--white);
+      font-size: 1.5rem;
+      font-weight: 700;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      display: inline-block;
+      margin: 2rem auto 1.5rem;
+    }
+    .pending-section {
+      text-align: center;
+    }
+    .doc-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      justify-content: center;
+      padding: 0 2rem 2rem;
+    }
+    .doc-card {
+      background: var(--white);
+      border: 1px solid #dde3ed;
+      border-radius: 10px;
+      width: 180px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-align: left;
+    }
+    .doc-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
+    }
+    .doc-card-icon {
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+    .doc-card-icon svg {
+      width: 64px;
+      height: 64px;
+    }
+    .doc-card p {
+      font-size: 0.75rem;
+      color: var(--navy);
+      margin: 0.1rem 0;
+      line-height: 1.4;
+    }
+    .doc-card p:first-child {
+      font-weight: 700;
+    }
+    .empty-state {
+      color: #888;
+      font-size: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <img src="../../assets/Northern_Samar_Provincial_Logo.png" alt="Logo" class="header-logo"/>
+    <span class="header-title">Digital Barangay Document<br/>Request System</span>
+  </header>
+
+  <nav class="nav-bar">
+    <a href="dashboard.html" class="nav-link active">HOME</a>
+    <a href="users.html" class="nav-link">USERS</a>
+    <a href="archives.html" class="nav-link">ARCHIVES</a>
+  </nav>
+
+  <main class="main-content">
+    <div class="pending-section">
+      <div class="pending-title">Pending Documents</div>
+    </div>
+    <div class="doc-grid" id="pending-grid">
+      <p class="empty-state" id="empty-msg" style="display:none;">No pending documents.</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <a href="#" class="footer-link">Privacy Policy</a>
+    <span class="footer-sep">|</span>
+    <a href="#" class="footer-link">Terms of Service</a>
+  </footer>
+
+  <script src="../../js/auth.js"></script>
+  <script src="../../js/admin-dashboard.js"></script>
+</body>
+</html>

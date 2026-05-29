@@ -29,7 +29,7 @@ if (btnLogin) {
             sessionStorage.setItem('user', JSON.stringify(user));
 
             if (user.role === 'ADMIN') {
-                window.location.href = 'admin/dashboard.html';
+                window.location.href = '../pages/admin/dashboard.html';
             } else {
                 window.location.href = '../html/dashboard.html';
             }

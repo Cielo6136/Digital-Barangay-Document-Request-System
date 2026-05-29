@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Requests – DBDRS</title>
+  <link rel="stylesheet" href="../../css/styles.css"/>
+  <style>
+    .page-title {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 1.5rem 0 1rem;
+    }
+    .table-wrapper {
+      margin: 0 2rem 2rem;
+      border: 1.5px solid #b0bdd0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    thead {
+      background: #e8ecf2;
+    }
+    thead th {
+      padding: 0.65rem 1rem;
+      text-align: left;
+      font-weight: 700;
+      color: var(--navy);
+      border-bottom: 1.5px solid #b0bdd0;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    tbody tr {
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: #f0f4fa; }
+    tbody tr:not(:last-child) { border-bottom: 1px solid #dde3ed; }
+    tbody td {
+      padding: 0.65rem 1rem;
+      color: #2a3650;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .status-PENDING    { background: #fff3cd; color: #856404; }
+    .status-APPROVED   { background: #d1e7dd; color: #0a5735; }
+    .status-PROCESSING { background: #cfe2ff; color: #0a367a; }
+    .status-READY      { background: #e2d9f3; color: #4a235a; }
+    .status-COMPLETED  { background: #d4edda; color: #155724; }
+    .empty-row td {
+      text-align: center;
+      color: #888;
+      padding: 2rem;
+    }
+
+    /* ── Floating panel ── */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 100;
+    }
+    .overlay.active { display: block; }
+    .float-panel {
+      position: fixed;
+      top: 50%;
+      right: 2rem;
+      transform: translateY(-50%);
+      background: var(--white);
+      border: 1.5px solid #b0bdd0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      width: 300px;
+      z-index: 101;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    }
+    .float-panel h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .panel-row {
+      font-size: 0.82rem;
+      color: #444;
+      margin-bottom: 0.3rem;
+    }
+    .panel-row span { font-weight: 600; color: var(--navy); }
+    .current-status-box {
+      background: #e8ecf2;
+      border-radius: 6px;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.85rem;
+      color: var(--navy);
+      font-weight: 600;
+      margin: 0.75rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .current-status-box::before {
+      content: '';
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .new-status-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .status-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .status-option {
+      border: 1.5px solid #b0bdd0;
+      border-radius: 8px;
+      padding: 0.5rem;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--navy);
+      transition: border-color 0.2s, background 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .status-option:hover { border-color: var(--gold); background: #fdf6e3; }
+    .status-option.selected { border-color: var(--navy); background: #e8ecf2; }
+    .status-option svg { width: 28px; height: 28px; }
+    .panel-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-confirm {
+      flex: 1;
+      background: var(--gold);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      padding: 0.55rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-confirm:hover { background: #c49a2a; }
+    .btn-cancel {
+      flex: 1;
+      background: #e8ecf2;
+      color: var(--navy);
+      border: none;
+      border-radius: 6px;
+      padding: 0.55rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-cancel:hover { background: #d0d8e8; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <img src="../../assets/Northern_Samar_Provincial_Logo.png" alt="Logo" class="header-logo"/>
+    <span class="header-title">Digital Barangay Document<br/>Request System</span>
+  </header>
+
+  <nav class="nav-bar">
+    <a href="dashboard.html" class="nav-link active">HOME</a>
+    <a href="users.html" class="nav-link">USERS</a>
+    <a href="archives.html" class="nav-link">ARCHIVES</a>
+  </nav>
+
+  <main class="main-content">
+    <div class="page-title">Manage Document Request Status</div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>User Name</th>
+            <th>Document Type</th>
+            <th>Request Date</th>
+            <th>Current Status</th>
+          </tr>
+        </thead>
+        <tbody id="requests-tbody">
+          <tr class="empty-row"><td colspan="5">No requests yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="closePanel()"></div>
+
+  <!-- Floating status panel -->
+  <div class="float-panel" id="float-panel">
+    <h3>Request Details &amp; Status Update</h3>
+    <div class="panel-row">Request ID: <span id="p-id"></span></div>
+    <div class="panel-row">User: <span id="p-user"></span></div>
+    <div class="panel-row">Document Type: <span id="p-type"></span></div>
+    <div class="panel-row">Current Status:</div>
+    <div class="current-status-box" id="p-current-status"></div>
+
+    <div class="new-status-label">New Status Update:</div>
+    <div class="status-options">
+      <div class="status-option" data-status="APPROVED" onclick="selectStatus(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2d4a7a" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Approved
+      </div>
+      <div class="status-option" data-status="PROCESSING" onclick="selectStatus(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2d4a7a" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        Processing
+      </div>
+      <div class="status-option" data-status="READY" onclick="selectStatus(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2d4a7a" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        Ready for Pickup
+      </div>
+      <div class="status-option" data-status="COMPLETED" onclick="selectStatus(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2d4a7a" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Completed
+      </div>
+    </div>
+
+    <div class="panel-actions">
+      <button class="btn-confirm" onclick="confirmUpdate()">Confirm Update</button>
+      <button class="btn-cancel" onclick="closePanel()">Cancel</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <a href="#" class="footer-link">Privacy Policy</a>
+    <span class="footer-sep">|</span>
+    <a href="#" class="footer-link">Terms of Service</a>
+  </footer>
+
+  <script src="../../js/auth.js"></script>
+  <script src="../../js/manage-requests.js"></script>
+</body>
+</html>

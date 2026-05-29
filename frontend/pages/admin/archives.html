@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Archives – DBDRS</title>
+  <link rel="stylesheet" href="../../css/styles.css"/>
+  <style>
+    .page-title {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 1.5rem 0 1rem;
+    }
+    .table-wrapper {
+      margin: 0 2rem 2rem;
+      border: 1.5px solid #b0bdd0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    thead {
+      background: #e8ecf2;
+    }
+    thead th {
+      padding: 0.65rem 1rem;
+      text-align: left;
+      font-weight: 700;
+      color: var(--navy);
+      border-bottom: 1.5px solid #b0bdd0;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    tbody tr:not(:last-child) { border-bottom: 1px solid #dde3ed; }
+    tbody td { padding: 0.65rem 1rem; color: #2a3650; }
+    .empty-row td {
+      text-align: center;
+      color: #888;
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <img src="../../assets/Northern_Samar_Provincial_Logo.png" alt="Logo" class="header-logo"/>
+    <span class="header-title">Digital Barangay Document<br/>Request System</span>
+  </header>
+
+  <nav class="nav-bar">
+    <a href="dashboard.html" class="nav-link">HOME</a>
+    <a href="users.html" class="nav-link">USERS</a>
+    <a href="archives.html" class="nav-link active">ARCHIVES</a>
+  </nav>
+
+  <main class="main-content">
+    <div class="page-title">Archive Request Explorer &amp; History</div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>User Name</th>
+            <th>Document Type</th>
+            <th>Request Date</th>
+            <th>Date Archived</th>
+          </tr>
+        </thead>
+        <tbody id="archive-tbody">
+          <tr class="empty-row"><td colspan="5">No archived records yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <a href="#" class="footer-link">Privacy Policy</a>
+    <span class="footer-sep">|</span>
+    <a href="#" class="footer-link">Terms of Service</a>
+  </footer>
+
+  <script src="../../js/auth.js"></script>
+  <script src="../../js/Archives.js"></script>
+</body>
+</html>

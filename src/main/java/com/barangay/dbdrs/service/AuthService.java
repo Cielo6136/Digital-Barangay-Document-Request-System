@@ -5,6 +5,7 @@ import com.barangay.dbdrs.storage.InMemoryStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -14,9 +15,8 @@ public class AuthService {
     private final InMemoryStore store;
 
     public String signup(User user) {
-        // check if email already exists
         if (store.findUserByEmail(user.getEmail()) != null) {
-            return null; // email taken
+            return null;
         }
 
         user.setId(UUID.randomUUID().toString());
@@ -29,9 +29,14 @@ public class AuthService {
         User user = store.findUserByEmail(email);
 
         if (user == null || !user.getPassword().equals(password)) {
-            return null; // invalid credentials
+            return null;
         }
 
         return user;
+    }
+
+    // ADMIN — get all users
+    public List<User> getAllUsers() {
+        return store.getAllUsers();
     }
 }

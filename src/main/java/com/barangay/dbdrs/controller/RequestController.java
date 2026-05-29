@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/requests")
@@ -15,7 +16,6 @@ public class RequestController {
 
     private final RequestService requestService;
 
-    // USER — submit a new request
     @PostMapping
     public ResponseEntity<DocumentRequest> submitRequest(
             @RequestBody DocumentRequest request) {
@@ -23,13 +23,19 @@ public class RequestController {
         return ResponseEntity.ok(created);
     }
 
-    // ADMIN — get all requests
+    @PutMapping("/{id}/status")
+    public ResponseEntity<?> updateStatus(
+            @PathVariable String id,
+            @RequestBody Map<String, String> body) {
+        requestService.updateRequestStatus(id, body.get("status"));
+        return ResponseEntity.ok("Status updated");
+    }
+
     @GetMapping
     public ResponseEntity<List<DocumentRequest>> getAllRequests() {
         return ResponseEntity.ok(requestService.getAllRequests());
     }
 
-    // USER — get own requests by email
     @GetMapping("/{email}")
     public ResponseEntity<List<DocumentRequest>> getRequestsByUser(
             @PathVariable String email) {

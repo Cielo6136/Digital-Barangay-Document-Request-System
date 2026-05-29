@@ -28,6 +28,10 @@ public class RequestService {
         return request;
     }
 
+    public void updateRequestStatus(String id, String status) {
+        store.updateRequestStatus(id, status);
+    }
+
     public List<DocumentRequest> getAllRequests() {
         return store.getAllRequests();
     }
