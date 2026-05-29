@@ -1,0 +1,167 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --navy:        #1e3a5f;
+  --navy-dark:   #152d4a;
+  --gold:        #c9a84c;
+  --gold-hover:  #b8922e;
+  --white:       #ffffff;
+  --bg:          #e8edf2;
+  --label:       #d0dce8;
+  --placeholder: #9aafc4;
+  --text-light:  #cdd8e3;
+  --link-color:  #c9a84c;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  width: 100%;
+  background: var(--navy-dark);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 24px;
+}
+
+.header-logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--white);
+  flex-shrink: 0;
+}
+
+.header-title {
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.content {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.card {
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 440px;
+}
+
+.card-title {
+  color: var(--white);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  color: var(--label);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 5px;
+  background: var(--white);
+  color: #1a2a3a;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+
+input::placeholder {
+  color: var(--placeholder);
+}
+
+input:focus {
+  box-shadow: 0 0 0 2px var(--gold);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: var(--gold);
+  color: var(--navy-dark);
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover  { background: var(--gold-hover); }
+.btn-primary:active { transform: scale(0.98); }
+
+.switch-link {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12.5px;
+  color: var(--text-light);
+}
+
+.switch-link a {
+  color: var(--link-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.switch-link a:hover {
+  text-decoration: underline;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 24px;
+}
+
+.footer-links a {
+  font-size: 12.5px;
+  color: var(--navy);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.footer-links a:hover {
+  color: var(--navy-dark);
+}
