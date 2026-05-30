@@ -81,13 +81,11 @@ if (btnSignup) {
     });
 }
 
-// LOGOUT
 function logout() {
     sessionStorage.removeItem('user');
     window.location.href = '/dbdrs/frontend/html/login.html';
 }
 
-// GUARD — call on every protected page
 function requireAuth(requiredRole = null) {
     const user = JSON.parse(sessionStorage.getItem('user'));
 
