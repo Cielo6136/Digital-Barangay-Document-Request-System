@@ -29,9 +29,9 @@ if (btnLogin) {
             sessionStorage.setItem('user', JSON.stringify(user));
 
             if (user.role === 'ADMIN') {
-                window.location.href = '../pages/admin/dashboard.html';
+                window.location.href = 'admin/dashboard.html';
             } else {
-                window.location.href = '../html/dashboard.html';
+                window.location.href = 'dashboard.html';
             }
 
         } catch (err) {
@@ -40,7 +40,7 @@ if (btnLogin) {
     });
 }
 
-// SIGN UP
+// SIGNUP
 const btnSignup = document.getElementById('btn-signup');
 if (btnSignup) {
     btnSignup.addEventListener('click', async () => {
@@ -84,20 +84,20 @@ if (btnSignup) {
 // LOGOUT
 function logout() {
     sessionStorage.removeItem('user');
-    window.location.href = '../html/login.html';
+    window.location.href = '/dbdrs/frontend/html/login.html';
 }
 
-// Call on protected pages
+// GUARD — call on every protected page
 function requireAuth(requiredRole = null) {
     const user = JSON.parse(sessionStorage.getItem('user'));
 
     if (!user) {
-        window.location.href = '../html/login.html';  // pages/user/ → pages/login.html
+        window.location.href = '/dbdrs/frontend/html/login.html';
         return null;
     }
 
     if (requiredRole && user.role !== requiredRole) {
-        window.location.href = '../html/login.html';
+        window.location.href = '/dbdrs/frontend/html/login.html';
         return null;
     }
 

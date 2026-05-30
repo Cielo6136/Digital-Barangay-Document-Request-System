@@ -1,6 +1,3 @@
-// Archives.js
-const API = 'http://localhost:8080';
-
 requireAuth('ADMIN');
 
 async function loadArchives() {

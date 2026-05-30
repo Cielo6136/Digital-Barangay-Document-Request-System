@@ -35,7 +35,6 @@ public class AuthService {
         return user;
     }
 
-    // ADMIN — get all users
     public List<User> getAllUsers() {
         return store.getAllUsers();
     }

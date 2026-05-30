@@ -1,5 +1,3 @@
-const API = 'http://localhost:8080';
-
 const user = requireAuth('USER');
 
 const requestId = sessionStorage.getItem('selectedRequestId');
