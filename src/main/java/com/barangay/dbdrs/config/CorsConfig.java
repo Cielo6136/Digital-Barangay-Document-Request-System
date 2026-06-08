@@ -12,9 +12,11 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                         "http://localhost:63342",
                         "http://localhost:63343",
-                        "http://127.0.0.1:63342"
+                        "http://127.0.0.1:63342",
+                        "https://digital-barangay-document-request-s-weld.vercel.app"
                 )
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*");
+
     }
 }
