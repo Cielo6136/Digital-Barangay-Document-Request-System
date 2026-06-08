@@ -83,7 +83,9 @@ Digital-Barangay-Document-Request-System/
 │       └── resources/
 │           └── application.properties
 ├── build.gradle
-└── README.md
+├── README.md
+├── Procfile
+└── system.properties
 ```
 
 ---
