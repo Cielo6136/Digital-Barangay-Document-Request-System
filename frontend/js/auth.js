@@ -1,4 +1,4 @@
-const API = 'web-production-3ca14.up.railway.app';
+const API = 'https://web-production-3ca14.up.railway.app';
 
 // LOGIN
 const btnLogin = document.getElementById('btn-login');
