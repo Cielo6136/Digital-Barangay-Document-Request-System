@@ -1,3 +1,4 @@
+/*
 package com.barangay.dbdrs.storageOldStructure;
 
 import com.barangay.dbdrs.model.DocumentRequest;
@@ -62,3 +63,4 @@ public class InMemoryStore {
                 .ifPresent(r -> r.setStatus(newStatus));
     }
 }
+*/
