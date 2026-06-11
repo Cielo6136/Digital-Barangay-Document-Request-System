@@ -21,8 +21,9 @@ The system supports two roles:
 | Frontend | Vanilla HTML, CSS, JavaScript |
 | Backend | Java 21, Spring Boot 4.0.6 |
 | Build Tool | Gradle (Groovy) |
-| Data Storage | In-memory (Java ArrayLists — no database) |
-| Deployment | Frontend → Vercel, Backend → Railway (optional) |
+| Database | PostgreSQL (via Railway) |
+| ORM | Spring Data JPA / Hibernate |
+| Deployment | Frontend → Vercel, Backend + Database → Railway |
 
 ---
 
@@ -75,40 +76,30 @@ Digital-Barangay-Document-Request-System/
 │       │   ├── model/
 │       │   │   ├── DocumentRequest.java
 │       │   │   └── User.java
-│       │   ├── service/
-│       │   │   ├── AuthService.java
-│       │   │   └── RequestService.java
-│       │   └── storage/
-│       │       └── InMemoryStore.java
+│       │   ├── repository/
+│       │   │   ├── UserRepository.java
+│       │   │   └── RequestRepository.java
+│       │   └── service/
+│       │       ├── AuthService.java
+│       │       └── RequestService.java
 │       └── resources/
 │           └── application.properties
 ├── build.gradle
 ├── README.md
-├── Procfile
-└── system.properties
+└── Procfile
 ```
 
 ---
 
-## Running the System Locally
+## Deployment
 
-### Prerequisites
-- Java 21 (Eclipse Temurin or Amazon Corretto recommended)
-- IntelliJ IDEA
-- A modern browser (Chrome or Edge)
+The system is fully deployed and accessible online. No local setup is required.
 
-### Guide
-
-1. Open the project in IntelliJ IDEA
-2. Let Gradle download dependencies automatically
-3. Run `DbdrsApplication.java` using the green Run button
-4. Wait for the console to show:
-   ```
-   Started DbdrsApplication in X seconds
-   ```
-5. Open `frontend/html/login.html` in your browser via IntelliJ's built-in server (right-click → Open In → Browser)
-
-The backend runs on `http://localhost:8080` and the frontend communicates with it via `fetch()` calls in `auth.js`.
+| Layer | Platform | URL |
+|---|---|---|
+| Frontend | Vercel | https://digital-barangay-document-request-s-weld.vercel.app |
+| Backend | Railway | https://web-production-3ca14.up.railway.app |
+| Database | Railway (PostgreSQL) | Managed internally by Railway |
 
 ---
 
@@ -116,10 +107,29 @@ The backend runs on `http://localhost:8080` and the frontend communicates with i
 
 | Role | Email | Password |
 |---|---|---|
-| Admin | admin@dbdrs.com | admin123 | #what you put if you want to login as admin
+| Admin | dbdrs@gmail.com | iloveyou |
 | User | register via signup | your chosen password |
 
-The admin account is pre-seeded in `InMemoryStore.java` on server startup. All other accounts are created through the signup form.
+The admin account is automatically seeded into the database on server startup if it does not already exist. All other accounts are created through the signup form and persist in the PostgreSQL database.
+
+---
+
+## Database
+
+The system uses PostgreSQL hosted on Railway for persistent data storage. Tables are automatically created by Hibernate on first deployment.
+
+| Table | Description |
+|---|---|
+| `users` | Stores registered user accounts and the pre-seeded admin |
+| `document_requests` | Stores all submitted document requests and their statuses |
+
+### Environment Variables
+
+The following environment variable must be configured on Railway for the backend to connect to the database:
+
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | PostgreSQL connection URL (referenced from Railway's Postgres service) |
 
 ---
 
@@ -151,13 +161,15 @@ Users can track this progress in real time on the Tracking Progress page.
 
 ## Key Design Decisions
 
-**No database** — data is stored in Java `ArrayList` objects inside `InMemoryStore.java`, which acts as a singleton shared across all requests. This keeps the setup simple for a demo environment. All data resets when the server restarts.
+**PostgreSQL on Railway** — data is persisted in a PostgreSQL database managed by Railway. All user accounts and document requests survive server restarts and redeployments. Tables are auto-created by Hibernate on startup via `spring.jpa.hibernate.ddl-auto=update`.
+
+**Admin seeding on startup** — the default admin account is automatically inserted into the database on every server startup if it does not already exist, ensuring the admin is always accessible without manual setup.
 
 **Single login form for both roles** — there is no role selector on the login screen. The backend determines the user's role from their credentials and the frontend redirects accordingly — admins go to the admin dashboard, users go to the user dashboard.
 
 **Session management via `sessionStorage`** — logged-in user data (name, email, role) is stored in the browser's `sessionStorage`. Each browser tab holds its own session independently, allowing admin and user to be logged in simultaneously on different tabs or windows.
 
-**CORS configuration** — `CorsConfig.java` allows the frontend (served from IntelliJ's built-in server on a different port) to make requests to the Spring Boot backend on port 8080.
+**CORS configuration** — `CorsConfig.java` explicitly allows requests from the Vercel frontend URL so the browser does not block cross-origin API calls to the Railway backend.
 
 **Separated CSS** — all shared styles (header, nav, footer, buttons) live in `styles.css`. Page-specific styles are scoped within each HTML file's `<style>` block.
 
@@ -165,23 +177,13 @@ Users can track this progress in real time on the Tracking Progress page.
 
 ## Limitations
 
-- Data does not persist between server restarts
 - No password hashing — passwords are stored as plain text (acceptable for demo only)
 - No authentication tokens — API endpoints are accessible without a valid session if called directly
-- Admin and user must share the same machine and browser for live data to be visible across sessions (unless backend is deployed to a live server)
 
 ---
 
-## Deployment (Optional)
+## Members
 
-For a live demo accessible from multiple devices, deploy both layers:
-
-**Frontend → Vercel**
-- Push the repository to GitHub
-- Connect to Vercel, set root directory to `frontend`
-- Add `frontend/index.html` as an entry point redirect to `html/login.html`
-
-## Members:
 - Gallano, Mark Cielo
 - Gumatay, Gian Carlos
 - Capoquian, Jojo

@@ -1,4 +1,4 @@
-package com.barangay.dbdrs.storage;
+package com.barangay.dbdrs.storageOldStructure;
 
 import com.barangay.dbdrs.model.DocumentRequest;
 import com.barangay.dbdrs.model.User;

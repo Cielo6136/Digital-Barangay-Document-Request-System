@@ -1,7 +1,7 @@
 package com.barangay.dbdrs.service;
 
 import com.barangay.dbdrs.model.DocumentRequest;
-import com.barangay.dbdrs.storage.InMemoryStore;
+import com.barangay.dbdrs.repository.RequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RequestService {
 
-    private final InMemoryStore store;
+    private final RequestRepository requestRepository;
 
     public DocumentRequest submitRequest(DocumentRequest request) {
         request.setId(UUID.randomUUID().toString());
@@ -24,19 +24,21 @@ public class RequestService {
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
                 )
         );
-        store.addRequest(request);
-        return request;
+        return requestRepository.save(request);
     }
 
     public void updateRequestStatus(String id, String status) {
-        store.updateRequestStatus(id, status);
+        requestRepository.findById(id).ifPresent(r -> {
+            r.setStatus(status);
+            requestRepository.save(r);
+        });
     }
 
     public List<DocumentRequest> getAllRequests() {
-        return store.getAllRequests();
+        return requestRepository.findAll();
     }
 
     public List<DocumentRequest> getRequestsByUser(String email) {
-        return store.getRequestsByUser(email);
+        return requestRepository.findByUserEmail(email);
     }
 }
