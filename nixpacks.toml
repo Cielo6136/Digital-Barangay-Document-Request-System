@@ -1,8 +1,0 @@
-[phases.setup]
-nixPkgs = ["graalvm-ce"]
-
-[phases.build]
-cmds = ["./gradlew nativeCompile"]
-
-[start]
-cmd = "./build/native/nativeCompile/dbdrs"
