@@ -83,19 +83,19 @@ if (btnSignup) {
 
 function logout() {
     sessionStorage.removeItem('user');
-    window.location.href = '/dbdrs/frontend/html/login.html';
+    window.location.href = '/html/login.html';
 }
 
 function requireAuth(requiredRole = null) {
     const user = JSON.parse(sessionStorage.getItem('user'));
 
     if (!user) {
-        window.location.href = '/dbdrs/frontend/html/login.html';
+        window.location.href = '/html/login.html';
         return null;
     }
 
     if (requiredRole && user.role !== requiredRole) {
-        window.location.href = '/dbdrs/frontend/html/login.html';
+        window.location.href = '/html/login.html';
         return null;
     }
 
